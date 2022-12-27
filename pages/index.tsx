@@ -59,7 +59,6 @@ export default function Home() {
     await setENSOrAddress(address, web3Provider);
     return signer;
   };
-
   /*
     connectWallet: Connects the MetaMask wallet
   */
