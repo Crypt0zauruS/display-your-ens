@@ -23,7 +23,7 @@ export default function Home() {
     web3Provider: ethers.providers.Web3Provider
   ) => {
     // Lookup the ENS related to the given address
-    var _ens = await web3Provider.lookupAddress(address);
+    var _ens = await web3Provider.lookupAddress(address as string);
     // If the address has an ENS set the ENS or else just set the address
     if (_ens) {
       setENS(_ens);
@@ -32,19 +32,12 @@ export default function Home() {
     }
   };
 
-  /**
-   * A `Provider` is needed to interact with the blockchain - reading transactions, reading balances, reading state, etc.
-   *
-   * A `Signer` is a special type of Provider used in case a `write` transaction needs to be made to the blockchain, which involves the connected account
-   * needing to make a digital signature to authorize the transaction being sent. Metamask exposes a Signer API to allow your website to
-   * request signatures from the user using Signer functions.
-   */
   const getProviderOrSigner = async () => {
     // Connect to Metamask
     // Since we store `web3Modal` as a reference, we need to access the `current` value to get access to the underlying object
     const provider =
       web3ModalRef.current && (await web3ModalRef.current.connect());
-    const web3Provider = new providers.Web3Provider(provider);
+    const web3Provider = new providers.Web3Provider(provider as any);
 
     // If user is not connected to the Goerli network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
@@ -94,8 +87,7 @@ export default function Home() {
   useEffect(() => {
     // if wallet is not connected, create a new instance of Web3Modal and connect the MetaMask wallet
     if (!walletConnected) {
-      // Assign the Web3Modal class to the reference object by setting it's `current` value
-      // The `current` value is persisted throughout as long as this page is open
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       web3ModalRef.current = new Web3Modal({
         network: "goerli",
         providerOptions: {},
