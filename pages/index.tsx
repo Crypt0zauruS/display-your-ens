@@ -87,7 +87,6 @@ export default function Home() {
   useEffect(() => {
     // if wallet is not connected, create a new instance of Web3Modal and connect the MetaMask wallet
     if (!walletConnected) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       web3ModalRef.current = new Web3Modal({
         network: "goerli",
         providerOptions: {},
